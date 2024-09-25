@@ -1,0 +1,39 @@
+{%include 'navbar.html'%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+    <style>
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .answer {
+            font-size: 18px;
+        }
+
+        .answer-date {
+            font-size: 16px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>FAQ</h1>
+    {% for faq in faq_list %}
+        <div class="faq-item">
+            <div class="question">{{ faq.question }}</div>
+            <div class="answer">{{ faq.answer }}</div>
+            <div class="answer-date">Answered on: {{ faq.answer_date }}</div>
+        </div>
+    {% endfor %}
+</body>
+</html>

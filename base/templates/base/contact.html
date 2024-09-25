@@ -1,0 +1,33 @@
+{%include 'navbar.html'%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact List</title>
+    <style>
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact List</h1>
+    <ul>
+        {% for contact in contacts %}
+            <li class="clearfix">
+                <img src="{{ contact.image.url }}" alt="{{ contact.title }}" class="img-responsive" style="width: 10%; float: left; margin-right: 10px;">
+                <div style="float: left;">
+                    <p>Title: {{ contact.title }}</p>
+                    <p>Description: {{ contact.description }}</p>
+                    <p>Phone Number: {{ contact.phone_number }}</p>
+                    <p>Email: {{ contact.email }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

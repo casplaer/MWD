@@ -1,0 +1,27 @@
+{%include 'navbar.html'%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <ul>
+        {% for cart_product in cartproduct_set %}
+            <li>
+                <p>{{ cart_product.product.name }}</p>
+                <p>{{ cart_product.product.price }}</p>
+                <p>Quantity: {{ cart_product.quantity }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+    <form method="get" action="{% url 'create_order' %}">
+        {% csrf_token %}
+        <input type="number" name="coupon_number"/>
+        <button type="submit">Create Order</button>
+    </form>
+</body>
+</html>
