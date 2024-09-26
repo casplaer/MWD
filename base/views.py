@@ -15,12 +15,14 @@ import io
 import base64
 
 from base.forms import CustomUserCreationForm, OrderForm, ProductForm, ReviewForm
-from .models import FAQ, Cart, Contact, Coupon, Job, New, Order, Product, Profile, Review, CartItem
+from .models import FAQ, Cart, Contact, Coupon, Job, New, Order, Product, Profile, Review, CartItem, Partner
 
 def home(request, category=None):
     popular_categories = Product.objects.values('category').annotate(total_quantity=Sum('cartitem__quantity')).order_by('-total_quantity')
 
     profitable_categories = Product.objects.values('category').annotate(total_revenue=Sum(F('cartitem__quantity') * F('price'))).order_by('-total_revenue')
+
+    partners = Partner.objects.all()
 
     most_popular_category = popular_categories.first()
     most_profitable_category = profitable_categories.first()
@@ -64,7 +66,8 @@ def home(request, category=None):
         'user_timezone': user_tz,
         'current_time': user_time,
         "most_popular_category": most_popular_category,
-        "most_profitable_category": most_profitable_category
+        "most_profitable_category": most_profitable_category,
+        "partners":partners,
     }
 
     return render(request, "base/home.html", context)

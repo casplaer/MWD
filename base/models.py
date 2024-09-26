@@ -114,3 +114,8 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.id} by {self.user.username}" 
+    
+class  Partner(models.Model):
+    logo_image = models.ImageField(upload_to="partners_logo/")
+    partner_url = models.URLField()
+    partner_name = models.TextField(default="partner")
