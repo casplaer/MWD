@@ -11,7 +11,7 @@ urlpatterns = [
     path('', views.home,name="home"),
     path('/<str:category>/', views.home, name='product_list_by_category'),
     path('about-us', views.about_us, name="about-us" ),
-    path('news', views.news),
+    path('news', views.news, name = 'news'),
     path('contact', views.contact),
     path("faq", views.faq),
     path("conf", views.conf),
@@ -26,4 +26,7 @@ urlpatterns = [
     path('edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
     path('category-chart/', views.category_chart_view, name='category_chart'),
     path('delete-product/<int:product_id>/', views.delete_product, name='delete_product'),
+    path('news_detailed/<int:news_id>/', views.news_detailed, name='news_detailed'),
+    path('product/<int:product_id>/', views.product_details, name='product_details'),
+    path('cart/update/<int:cart_product_id>/<str:action>/', views.update_cart, name='update_cart'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

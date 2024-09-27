@@ -67,8 +67,9 @@ class New(models.Model):
     def __str__(self):
         return self.title
     
-from django.db import models
-
+    def short_description(self):
+        return self.description[:30] + '... read in details'
+    
 class FAQ(models.Model):
     question = models.CharField(max_length=255)
     answer = models.TextField()
@@ -119,3 +120,15 @@ class  Partner(models.Model):
     logo_image = models.ImageField(upload_to="partners_logo/")
     partner_url = models.URLField()
     partner_name = models.TextField(default="partner")
+
+class AboutUs(models.Model):
+    name = models.CharField(max_length=255, default="Welcome to About Us Section")  
+    information = models.TextField()           
+    video = models.FileField(upload_to='videos/', default='F:\Уник\СТРВЕБ\MWD\static\videos\y2meta.com - EPIC INTRO NO TEXT(360p).mp4')   
+    logo = models.ImageField(upload_to='logos/', blank=True)
+    history = models.TextField(blank=True)     
+    details = models.TextField(blank=True)     
+    certificate = models.ImageField() 
+
+    def __str__(self):
+        return self.name

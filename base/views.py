@@ -15,7 +15,7 @@ import io
 import base64
 
 from base.forms import CustomUserCreationForm, OrderForm, ProductForm, ReviewForm
-from .models import FAQ, Cart, Contact, Coupon, Job, New, Order, Product, Profile, Review, CartItem, Partner
+from .models import FAQ, Cart, Contact, Coupon, Job, New, Order, Product, Profile, Review, CartItem, Partner, AboutUs
 
 def home(request, category=None):
     popular_categories = Product.objects.values('category').annotate(total_quantity=Sum('cartitem__quantity')).order_by('-total_quantity')
@@ -74,7 +74,11 @@ def home(request, category=None):
 
 
 def about_us(request):
-    return render(request, 'base/about.html')
+    about_us = AboutUs.objects.first()
+    context = {
+        "about_us" : about_us
+    }
+    return render(request, 'base/about.html', context)
 
 def news(request):
     news_list = New.objects.all()
@@ -189,11 +193,20 @@ def view_cart(request):
 def create_order(request):
     cart = Cart.objects.get(user=request.user, is_new=True)
     cart_items = CartItem.objects.filter(cart=cart)
-    
     coupon_number = request.GET.get('coupon_number')
-    coupon = Coupon.objects.get(number=coupon_number)
-    title_value = coupon.title
-    numeric_value = int(title_value)
+    coupon = None  
+
+    if coupon_number:  
+        try:
+            coupon = Coupon.objects.get(number=coupon_number)
+        except Coupon.DoesNotExist:
+            coupon = None  
+    numeric_value = 0
+    if coupon is None:
+        numeric_value = 0
+    else:
+        title_value = coupon.title
+        numeric_value = int(title_value)
 
     total_payment = sum(item.product.price * item.quantity for item in cart_items)
 
@@ -311,3 +324,29 @@ def category_chart_view(request):
     }
 
     return render(request, 'base/category_chart.html', context)
+
+def news_detailed(request, news_id):
+    news_item = get_object_or_404(New, id=news_id) 
+    return render(request, 'base/news_detailed.html', {'news_item': news_item})
+
+def product_details(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'base/product_details.html', {'product': product})
+
+def update_cart(request, cart_product_id, action):
+    cart_item = CartItem.objects.get(id=cart_product_id)
+
+    if action == 'increase':
+        cart_item.quantity += 1
+    elif action == 'decrease':
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+        else:
+            cart_item.delete()
+            return redirect('/cart') 
+    elif action == 'remove':
+        cart_item.delete()
+        return redirect('/cart') 
+    
+    cart_item.save()
+    return redirect('/cart') 

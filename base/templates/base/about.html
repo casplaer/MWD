@@ -1,4 +1,79 @@
 {%include 'navbar.html'%}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>About Us</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">About "Everything and Always"</h1>
 
-<h1>About Us</h1>
-<h3>Online shop with all kinds of stuff</h3>
+        <div class="text-center mb-4">
+            {% if about_us.logo %}
+                <img src="{{ about_us.logo.url }}" alt="Logo" class="img-fluid" style="max-width: 200px;">
+            {% endif %}
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>About</h4>
+            </div>
+            <div class="card-body">
+                <p>{{ about_us.information }}</p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Company history</h4>
+            </div>
+            <div class="card-body">
+                <p>{{ about_us.history }}</p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Details</h4>
+            </div>
+            <div class="card-body">
+                <pre>{{ about_us.details }}</pre>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Certificate</h4>
+            </div>
+            <div class="card-body">
+                {% if about_us.certificate %}
+                    <img src="{% static 'general_images/certificate.jfif'%}" alt="Certificate" class="img-fluid">
+                {% else %}
+                    <p>No certificates.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Video</h4>
+            </div>
+            <div class="card-body">
+                {% if about_us.video %}
+                    <video controls class="img-fluid" style="width: 100%; height: auto;">
+                        <source src="{{ about_us.video.url }}" type="video/mp4"> 
+                        Your browser doesn't suppor videos.
+                    </video>
+                {% else %}
+                    <p>No video.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>

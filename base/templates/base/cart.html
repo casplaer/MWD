@@ -10,18 +10,37 @@
 <body>
     <h1>Your Cart</h1>
     <ul>
-        {% for cart_product in cartproduct_set %}
-            <li>
-                <p>{{ cart_product.product.name }}</p>
-                <p>{{ cart_product.product.price }}</p>
-                <p>Quantity: {{ cart_product.quantity }}</p>
-            </li>
-        {% endfor %}
+        {% if cartproduct_set.count == 0 %}
+            <h2>There is nothing in your cart. You can add products on the Home page.</h2>
+        {% else %}
+            {% for cart_product in cartproduct_set %}
+                <li>
+                    <p>{{ cart_product.product.name }}</p>
+                    <p>{{ cart_product.product.price }}</p>
+                    <p>Quantity: {{ cart_product.quantity }}</p>
+                    <form method="post" action="{% url 'update_cart' cart_product.id 'increase' %}">
+                        {% csrf_token %}
+                        <button type="submit">+</button>
+                    </form>
+                    <form method="post" action="{% url 'update_cart' cart_product.id 'decrease' %}">
+                        {% csrf_token %}
+                        <button type="submit">-</button>
+                    </form>
+                    <form method="post" action="{% url 'update_cart' cart_product.id 'remove' %}">
+                        {% csrf_token %}
+                        <button type="submit">Remove</button>
+                    </form>
+                </li>
+            {% endfor %}
+
+            <form method="get" action="{% url 'create_order' %}">
+                {% csrf_token %}
+                <input type="number" name="coupon_number" placeholder="Enter coupon number" />
+                <button type="submit">Create Order</button>
+            </form>
+        {% endif %}
     </ul>
-    <form method="get" action="{% url 'create_order' %}">
-        {% csrf_token %}
-        <input type="number" name="coupon_number"/>
-        <button type="submit">Create Order</button>
-    </form>
 </body>
+
+
 </html>

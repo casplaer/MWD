@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{%include 'navbar.html'%}
+{%load static%}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }}</title>
+</head>
+<body>
+    <h1>{{ product.name }}</h1>
+    <p>Description: {{ product.description }}</p>
+    <p>Price: {{ product.price }}</p>
+    <p>Unit: {{ product.get_unit_display }}</p>
+    <p>Category: {{ product.get_category_display }}</p>
+    <p>Amount available: {{ product.amount }}</p>
+    <form method="post" action="{% url 'add_to_cart' product.id %}">
+        {% csrf_token %}
+        <button type="submit" style="display: flex; align-items: center;">
+            <img src="{% static 'general_images/cart.png' %}" alt="Add to Cart" style="width: 20px; height: 20px; margin-right: 5px;">
+            Add to Cart
+        </button>
+    </form>
+    <a href="{% url 'home' %}">Back to Products</a> 
+</body>
+</html>
