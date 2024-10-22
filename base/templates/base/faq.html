@@ -1,4 +1,4 @@
-{%include 'navbar.html'%}
+{% include 'navbar.html' %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,33 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ</title>
     <style>
-        .faq-item {
+        details {
             margin-bottom: 20px;
         }
 
-        .question {
+        summary {
             font-size: 24px;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .answer {
             font-size: 18px;
+            margin-top: 10px;
         }
 
         .answer-date {
             font-size: 16px;
             color: gray;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <h1>FAQ</h1>
     {% for faq in faq_list %}
-        <div class="faq-item">
-            <div class="question">{{ faq.question }}</div>
+        <details class="faq-item">
+            <summary>{{ faq.question }}</summary>
             <div class="answer">{{ faq.answer }}</div>
             <div class="answer-date">Answered on: {{ faq.answer_date }}</div>
-        </div>
+        </details>
     {% endfor %}
 </body>
 </html>

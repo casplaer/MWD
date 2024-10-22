@@ -9,10 +9,12 @@
 <body>
     {% include 'navbar.html' %}
     <div class="container mt-5">
-        <h1>{{ news_item.title }}</h1>
-        <img src="{{ news_item.image.url }}" class="img-fluid" alt="{{ news_item.title }}">
-        <p>{{ news_item.description }}</p>
-        <a href="{% url 'news' %}" class="btn btn-secondary">Back to news</a>
+        <div class="text-center">
+            <h1>{{ news_item.title }}</h1>
+            <img src="{{ news_item.image.url }}" class="img-fluid my-4" alt="{{ news_item.title }}">
+            <p>{{ news_item.description }}</p>
+            <a href="{% url 'news' %}" class="btn btn-secondary mt-4">Back to news</a>
+        </div>
     </div>
 </body>
 </html>

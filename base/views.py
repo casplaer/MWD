@@ -68,6 +68,9 @@ def home(request, category=None):
         "most_popular_category": most_popular_category,
         "most_profitable_category": most_profitable_category,
         "partners":partners,
+        'page_title': 'Title of the page',
+        'page_description': 'Description for search engines',
+        'page_keywords': 'Django, Python, web development',
     }
 
     return render(request, "base/home.html", context)

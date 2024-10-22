@@ -1,4 +1,4 @@
-{%include 'navbar.html'%}
+{% include 'navbar.html' %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,17 +6,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Job List</h1>
-    <ul>
-        {% for job in jobs %}
-        <li>
-            <h2>{{ job.title }}</h2>
-            <p>{{ job.description }}</p>
-            <p>Salary: {{ job.salary }}</p>
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="container mt-5">
+        <h1>Job List</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Description</th>
+                    <th>Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.description }}</td>
+                    <td>{{ job.salary }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

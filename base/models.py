@@ -62,13 +62,15 @@ class Coupon(models.Model):
 class New(models.Model):
     title = models.CharField(max_length=100, null=False)
     description = models.TextField(null=False)
+    
     image = models.ImageField(upload_to='news_images/')
 
     def __str__(self):
         return self.title
     
+    @property
     def short_description(self):
-        return self.description[:30] + '... read in details'
+        return self.description[:20]
     
 class FAQ(models.Model):
     question = models.CharField(max_length=255)
