@@ -1,0 +1,87 @@
+@import url(main.css);
+
+h1.text-center {
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 2.5rem;                    
+    color: #2c3e50;                       
+    text-align: center;                    
+    margin-bottom: 30px;                   
+    letter-spacing: 1px;                   
+    font-weight: 700;                    
+  }
+
+.partners-row {
+    display: flex;
+    justify-content: center;  
+    flex-wrap: wrap;          
+    gap: 40px;                
+    padding: 20px;
+  }
+  
+  .partner-card {
+    display: flex;
+    flex-direction: column;   
+    align-items: center;      
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .partner-logo {
+    width: 180px;              
+    height: 180px;            
+    background-color: #ffffff;  
+    border: 3px solid #e0e0e0;  
+    border-radius: 50%;        
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;           
+    transition: transform 0.3s ease;
+  }
+  
+  .partner-logo img {
+    max-width: 90%;       
+    max-height: 90%;        
+    width: auto;              
+    height: auto;             
+  }
+  .partner-logo:hover {
+    transform: scale(1.1);      
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .partner-name {
+    font-family: 'Poppins', sans-serif; 
+    font-size: 1rem;
+    color: #333333;
+    margin-top: 10px;
+    font-weight: 500;
+  }
+
+.header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.logo {
+    max-width: 200px;
+    height: auto;
+}
+
+.banner {
+    margin: 20px auto;
+    width: 100%;
+}
+
+.banner-slider {
+    display: flex;
+    width: 100%; 
+}
+
+.banner-slider img {
+    width: 300px; 
+    flex-shrink: 0; 
+    max-height: 300px; 
+    object-fit: cover;
+}

@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 {%load static%}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="{% static 'general_images/favicon.png' %}" >
-</head>
+<link rel="stylesheet" href="{% static 'css/navbar_style.css' %}">
 <body>
-    {%if request.user.is_authenticated%}
-    <h1>Hello, {{request.user}}</h1>
-    {%endif%}
-    <a href="/"><button>Home</button></a>
-    <a href="/about-us"><button>About</button></a>
-    <a href="/contact"><button>Contacts</button></a>
-    <a href="/coupons"><button>Coupons</button></a>
-    <a href="/faq"><button>FAQ</button></a>
-    <a href="/news"><button>News</button></a>
-    <a href="/conf"><button>Policy</button></a>
-    <a href="/reviews"><button>Reviews</button></a>
-    <a href="/vacancies"><button>Vacancy</button></a>
-    <a href="/category-chart"><button>Chart</button></a>
-    {%if request.user.is_authenticated%}
-    <a href="{% url 'logout' %}"><button>Logout</button></a>
-    <a href='/cart'><button>Cart</button></a>
-    <a href='/order_list'><button>Order List</button></a>
-    {%else%}
-    <a href="{% url 'login' %}"><button>Login</button></a>
-    {%endif%}
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="/" class="logo-link">
+                <img src="{% static "general_images/logo.png" %}" alt="Company Logo" class="logo">
+            </a>
+            <a href="/" class="company-name">PRODUCTCITY</a>
+            <a href="/about-us" class="about-link">ABOUT US</a>
+        </div>
+
+        <div class="navbar-links">
+            <a href="/vacancies">CAREERS</a>
+            <a href="/reviews">REVIEWS</a>
+            <a href="/news">NEWS</a>
+            <a href="/conf">POLICY</a>
+            <a href="/faq">FAQ</a>
+            <a href="/coupons">COUPONS</a>
+            <a href="/contact">CONTACTS</a>
+        </div>
+
+        <div class="navbar-right">
+            <div class="account-dropdown">
+                <span class="account-toggle">ACCOUNT</span>
+                <div class="dropdown-menu">
+                    <a href="/login">LOGIN</a>
+                    <a href="/register">CREATE ACCOUNT</a>
+                </div>
+            </div>
+        </div>
+
+
+    </nav>
 </body>

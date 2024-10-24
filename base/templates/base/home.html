@@ -1,26 +1,11 @@
 <!DOCTYPE html>
-{% load static %}
-{%include 'navbar.html'%}
-<html lang="en">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ page_description }}">
-    <meta name="keywords" content="{{ page_keywords }}">
-    <meta name="author" content="Everything and Always">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
-</head>
+{% extends "base.html" %}
+{%load static%}
+{%block title%} Home {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+<main>
 <body>
- 
-    <hr>
-    
-    <header class="header">
-        <img src="{% static 'general_images/company_logo.jfif' %}" alt="Company logo" class="logo">
-    </header>
-    
     <section class="banner">
         <div class="banner-slider">
             <img src="{% static 'general_images/ad1.jfif' %}" alt="Advertisment 1">
@@ -74,23 +59,23 @@
     <hr>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Our Partners</h1>
-        <div class="row">
+        <div class="partners-row">
             {% for partner in partners %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 text-center shadow-sm">
-                    <a href="{{ partner.partner_url }}" target="_blank">
-                        <img src="{{ partner.logo_image.url }}" class="card-img-top p-3" alt="{{ partner.partner_name }}" style="max-height: 150px; object-fit: contain;">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ partner.partner_name }}</h5>
+            <div class="partner-card">
+                <a href="{{ partner.partner_url }}" target="_blank">
+                    <div class="partner-logo">
+                        <img src="{{ partner.logo_image.url }}" alt="{{ partner.partner_name }}">
                     </div>
-                </div>
+                </a>
+                <h5 class="partner-name">{{ partner.partner_name }}</h5>
             </div>
             {% empty %}
             <p>No partners to display.</p>
             {% endfor %}
         </div>
     </div>
+    
 
 </body>
-</html>
+</main>
+{%endblock content%}
