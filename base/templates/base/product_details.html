@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-{%include 'navbar.html'%}
-{%load static%}
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ product.name }}</title>
-</head>
+{% extends "base.html" %}
+{% load static %}
+{%block title %} Details {%endblock%}
+{% block content %}
 <body>
     <h1>{{ product.name }}</h1>
     <p>Description: {{ product.description }}</p>
@@ -23,4 +18,4 @@
     </form>
     <a href="{% url 'home' %}">Back to Products</a> 
 </body>
-</html>
+{%endblock%}

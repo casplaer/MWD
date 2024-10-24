@@ -1,0 +1,22 @@
+@import url(main.css);
+
+details {
+    margin-bottom: 20px;
+}
+
+summary {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.answer-date {
+    font-size: 16px;
+    color: gray;
+    margin-top: 5px;
+}

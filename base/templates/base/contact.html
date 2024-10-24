@@ -1,19 +1,8 @@
-{%include 'navbar.html'%}
+{% extends "base.html" %}
+{% load static %}
+{%block title %} About Us {%endblock%}
+{% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact List</title>
-    <style>
-        .clearfix::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-    </style>
-</head>
 <body>
     <h1>Contact List</h1>
     <ul>
@@ -30,4 +19,5 @@
         {% endfor %}
     </ul>
 </body>
-</html>
+
+{%endblock%}

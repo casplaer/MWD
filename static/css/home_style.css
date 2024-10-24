@@ -10,12 +10,29 @@ h1.text-center {
     font-weight: 700;                    
   }
 
+.partners-container{
+  position: absolute;
+  bottom: -390px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  height: 50%;
+}
+
+.partners-text{
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 41px;
+  margin: 0;
+}
+
 .partners-row {
     display: flex;
     justify-content: center;  
     flex-wrap: wrap;          
     gap: 40px;                
     padding: 20px;
+    height: 75%;
   }
   
   .partner-card {
@@ -54,7 +71,7 @@ h1.text-center {
   .partner-name {
     font-family: 'Poppins', sans-serif; 
     font-size: 1rem;
-    color: #333333;
+    color: white;
     margin-top: 10px;
     font-weight: 500;
   }

@@ -1,31 +1,7 @@
-{%include 'navbar.html'%}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News List</title>
-    <style>
-        .news-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .news-image {
-            width: 20%;
-            margin-bottom: 10px;
-        }
-
-        .news-details {
-            flex: 1;
-            width: 100%;
-        }
-    </style>
-</head>
+{% extends "base.html" %}
+{% load static %}
+{%block title %} News {%endblock%}
+{% block content %}
 <body>
     <h1>News List</h1>
     {% for news in news_list %}
@@ -38,4 +14,4 @@
         </div>
     {% endfor %}
 </body>
-</html>
+{%endblock%}

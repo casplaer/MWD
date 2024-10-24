@@ -1,12 +1,7 @@
-{% include 'navbar.html' %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Product</title>
-</head>
+{% extends "base.html" %}
+{% load static %}
+{%block title %} About Us {%endblock%}
+{% block content %}
 <body>
     <h1>Are you sure you want to delete "{{ product.name }}"?</h1>
     <form method="post">
@@ -16,3 +11,4 @@
     </form>
 </body>
 </html>
+{%endblock%}

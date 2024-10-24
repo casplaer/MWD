@@ -1,12 +1,7 @@
-{%include 'navbar.html'%}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Order</title>
-</head>
+{% extends "base.html" %}
+{% load static %}
+{%block title %} About Us {%endblock%}
+{% block content %}
 <body>
     <h1>Create Order</h1>
     <ul>
@@ -28,3 +23,4 @@
     </form>
 </body>
 </html>
+{%endblock%}

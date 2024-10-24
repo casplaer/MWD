@@ -4,17 +4,18 @@
 {%block title%} Home {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
-<main>
 <body>
-    <section class="banner">
+    <main>
+    
+    <!-- <section class="banner">
         <div class="banner-slider">
             <img src="{% static 'general_images/ad1.jfif' %}" alt="Advertisment 1">
             <img src="{% static 'general_images/ad2.jfif' %}" alt="Advertisment 2">
             <img src="{% static 'general_images/ad3.jfif' %}" alt="Advertisment 3">
         </div>
-    </section>
+    </section> -->
 
-    <form method="get" action="">
+    <!-- <form method="get" action="">
         <label for="min_price">Min Price:</label>
         <input type="number" step="0.01" id="min_price" name="min_price" value="{{ request.GET.min_price }}">
         
@@ -54,11 +55,11 @@
     <h1>Latest News</h1>
     <h2>{{ latest_new.title }}</h2>
     <p>{{ latest_new.short_description }} <a href="{% url 'news_detailed' latest_new.id %}">learn more...</a></p>
-    <img src="{{ latest_new.image.url }}" alt="{{ latest_new.title }}" width="10%">
+    <img src="{{ latest_new.image.url }}" alt="{{ latest_new.title }}" width="10%"> -->
 
-    <hr>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Our Partners</h1>
+    
+    <div class="partners-container">
+        <h1 class="partners-text">Our Partners</h1>
         <div class="partners-row">
             {% for partner in partners %}
             <div class="partner-card">
@@ -69,13 +70,9 @@
                 </a>
                 <h5 class="partner-name">{{ partner.partner_name }}</h5>
             </div>
-            {% empty %}
-            <p>No partners to display.</p>
             {% endfor %}
         </div>
     </div>
-    
-
-</body>
 </main>
+</body>
 {%endblock content%}

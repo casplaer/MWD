@@ -39,11 +39,11 @@ def home(request, category=None):
     except Profile.DoesNotExist:
         user_role = 'none'
 
-    api_url = "https://catfact.ninja/fact"
-    response = requests.get(api_url)
+    # api_url = "https://catfact.ninja/fact"
+    # response = requests.get(api_url)
 
-    if response.status_code == 200:
-        cat_fact = response.json()['fact']
+    # if response.status_code == 200:
+    #     cat_fact = response.json()['fact']
 
     products = Product.objects.all()
 
@@ -61,7 +61,6 @@ def home(request, category=None):
     context = {
         'products': products,
         'user_role': user_role,
-        'cat_fact':cat_fact,
         'latest_new':latest_new,
         'user_timezone': user_tz,
         'current_time': user_time,

@@ -7,6 +7,15 @@
     <link rel="stylesheet">
     <title>{% block title %}Page Title{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'general_images/favicon.png' %}" type="image/x-icon">
+    <style>
+        body{
+            background-image: url("{% static 'background/nyc.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            position: relative;
+        }
+    </style>
 </head>
 <body>
     <header>

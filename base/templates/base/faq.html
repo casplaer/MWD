@@ -1,34 +1,8 @@
-{% include 'navbar.html' %}
+{% extends "base.html" %}
+{% load static %}
+{%block title %} About Us {%endblock%}
+{% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ</title>
-    <style>
-        details {
-            margin-bottom: 20px;
-        }
-
-        summary {
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .answer {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-
-        .answer-date {
-            font-size: 16px;
-            color: gray;
-            margin-top: 5px;
-        }
-    </style>
-</head>
 <body>
     <h1>FAQ</h1>
     {% for faq in faq_list %}
@@ -39,4 +13,4 @@
         </details>
     {% endfor %}
 </body>
-</html>
+{%endblock%}

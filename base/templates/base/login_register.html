@@ -1,11 +1,7 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
+{% extends "base.html" %}
+{% load static %}
+{%block title %} Login {%endblock%}
+{% block content %}
 <body>
     {% if messages %}
     <ul class="messages">
@@ -29,7 +25,6 @@
         </form>
 
         <p>Haven't signed up yet?</p>
-        <a href="/"><button>Home</button></a>
         <a href="{% url 'register' %}">Sign up</a>
     </div>
     {% else %}
@@ -41,9 +36,8 @@
         </form>
         <p>Already signed up?</p>
         <a href="{% url 'login' %}">Login</a>
-        <a href="/"><button>Home</button></a>
 
     </div>
     {% endif %}
 </body>
-</html>
+{%endblock%}

@@ -5,13 +5,19 @@ html, body {
     height: 100%;
 }
 
+main{
+    margin-top: 80px;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
     background-color: black;
     height: 80px;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 .navbar-left {
@@ -36,6 +42,7 @@ html, body {
     color: white;
     text-decoration: none;
     margin-right: 15px;
+    font-kerning:normal;
 }
 
 .about-link {

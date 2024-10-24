@@ -1,5 +1,7 @@
-{%include 'navbar.html'%}
-
+{% extends "base.html" %}
+{% load static %}
+{%block title %} About Us {%endblock%}
+{% block content %}
 <h1>Empty for now</h1>
 <h1>Clever thought:</h1>
 <q>{{quote_text}}</q>
@@ -10,3 +12,4 @@ Curabitur ac condimentum elit. Vivamus sagittis viverra nibh at laoreet. Donec p
 
 Nulla molestie, est in tincidunt aliquet, tortor enim euismod ex, id sagittis est leo id erat. Donec lacinia massa iaculis luctus tempor. Donec suscipit, felis id aliquet commodo, risus dui fermentum erat, maximus aliquet dui quam et elit. Vestibulum faucibus ipsum a dignissim molestie. Vivamus a ornare dolor. Nulla facilisi. Aliquam consequat facilisis pellentesque. In metus velit, sagittis quis felis ac, luctus placerat libero. Etiam ut erat sit amet lectus vestibulum molestie. Integer neque massa, ornare volutpat odio et, egestas aliquet diam. Ut tempus neque et tortor dapibus malesuada.
 </blockquote>
+{% endblock %}
