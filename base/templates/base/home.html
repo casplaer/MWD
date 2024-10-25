@@ -4,75 +4,75 @@
 {%block title%} Home {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
-<body>
-    <main>
-    
-    <!-- <section class="banner">
-        <div class="banner-slider">
-            <img src="{% static 'general_images/ad1.jfif' %}" alt="Advertisment 1">
-            <img src="{% static 'general_images/ad2.jfif' %}" alt="Advertisment 2">
-            <img src="{% static 'general_images/ad3.jfif' %}" alt="Advertisment 3">
-        </div>
-    </section> -->
-
-    <!-- <form method="get" action="">
-        <label for="min_price">Min Price:</label>
-        <input type="number" step="0.01" id="min_price" name="min_price" value="{{ request.GET.min_price }}">
-        
-        <label for="max_price">Max Price:</label>
-        <input type="number" step="0.01" id="max_price" name="max_price" value="{{ request.GET.max_price }}">
-        
-        <select>
-            <option></option>
-        </select>
-
-        <button type="submit">Filter</button>
-    </form>
-
-    <ul>
-        <li><a href="{% url 'home' %}">All</a></li>
-        <li><a href="{% url 'product_list_by_category' 'cat1' %}">Category 1</a></li>
-        <li><a href="{% url 'product_list_by_category' 'cat2' %}">Category 2</a></li>
-        <li><a href="{% url 'product_list_by_category' 'cat3' %}">Category 3</a></li>
-    </ul>
-    <ul>
-        {% for product in products %}
-            <li>
-                <h2><a href="{% url 'product_details' product.id %}">{{ product.name }}</a></h2>
-                <p>{{ product.description }}</p>
-                <p>Unit: {{ product.get_unit_display }}</p>
-                <p>Category: {{ product.get_category_display }}</p>
-
-                {% if user_role == 'admin' %}
-                    <a href="{% url 'edit_product' product.id %}"><button>Edit</button></a>
-                    <a href="{% url 'delete_product' product.id %}"><button>Delete</button></a>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-
-    <hr>
-    <h1>Latest News</h1>
-    <h2>{{ latest_new.title }}</h2>
-    <p>{{ latest_new.short_description }} <a href="{% url 'news_detailed' latest_new.id %}">learn more...</a></p>
-    <img src="{{ latest_new.image.url }}" alt="{{ latest_new.title }}" width="10%"> -->
-
-    
-    <div class="partners-container">
-        <h1 class="partners-text">Our Partners</h1>
-        <div class="partners-row">
-            {% for partner in partners %}
-            <div class="partner-card">
-                <a href="{{ partner.partner_url }}" target="_blank">
-                    <div class="partner-logo">
-                        <img src="{{ partner.logo_image.url }}" alt="{{ partner.partner_name }}">
+<head>
+    <script src="{%static 'js/home_news.js'%}"></script>
+</head>
+<body onload='selectNews(0)'>
+    <div class="page-wrapper">
+        <main class="content-container">
+            <div class="news-page">
+                <div class="news-display">
+                    <div class="news-details">
+                        <a id="news-id" href><h1 id="news-title" class="news-title"></h1></a>
+                        <p id="news-description" class="news-description"></p>
                     </div>
-                </a>
-                <h5 class="partner-name">{{ partner.partner_name }}</h5>
+                    <div class="news-image">
+                        <img id="main-news-image" src="" alt="Main News">
+                    </div>
+                </div>  
+               <div class="news-thumbnails">
+                    <div class="thumbnail" onclick="selectNews(0)" data-title="{{ news_list.0.title }}" 
+                                            data-description="{{ news_list.0.short_description }}" data-image="{{ news_list.0.image.url }}" data-id="{{ news_list.0.id }}">
+                        <img src="{{ news_list.0.image.url }}" alt="{{ news_list.0.title }}">
+                    </div>
+                    <div class="thumbnail" onclick="selectNews(1)" data-title="{{ news_list.1.title }}" 
+                                            data-description="{{ news_list.1.short_description }}" data-image="{{ news_list.1.image.url }}" data-id="{{ news_list.1.id }}">
+                        <img src="{{ news_list.1.image.url }}" alt="{{ news_list.1.title }}" >
+                    </div>
+                    <div class="thumbnail" onclick="selectNews(2)" data-title="{{ news_list.2.title }}"
+                                             data-description="{{ news_list.2.short_description }}" data-image="{{ news_list.2.image.url }}" data-id="{{ news_list.2.id }}">
+                        <img src="{{ news_list.2.image.url }}" alt="{{ news_list.2.title }}" >
+                    </div>
+                </div> 
             </div>
-            {% endfor %}
+            
+        </main>
+
+        <div class="partners-container">
+            <h1 class="partners-text">Our Partners</h1>
+            <div class="partners-row">
+                {% for partner in partners %}
+                <div class="partner-card">
+                    <a href="{{ partner.partner_url }}" target="_blank">
+                        <div class="partner-logo">
+                            <img src="{{ partner.logo_image.url }}" alt="{{ partner.partner_name }}">
+                        </div>
+                    </a>
+                    <h5 class="partner-name">{{ partner.partner_name }}</h5>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="preloader">
+                <svg class="cart" role="img" aria-label="Shopping cart line animation" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+                    <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="8">
+                        <g class="cart__track" stroke="hsla(0,10%,10%,0.1)">
+                            <polyline points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" />
+                            <circle cx="43" cy="111" r="13" />
+                            <circle cx="102" cy="111" r="13" />
+                        </g>
+                        <g class="cart__lines" stroke="currentColor">
+                            <polyline class="cart__top" points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" stroke-dasharray="338 338" stroke-dashoffset="-338" />
+                            <g class="cart__wheel1" transform="rotate(-90,43,111)">
+                                <circle class="cart__wheel-stroke" cx="43" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" />
+                            </g>
+                            <g class="cart__wheel2" transform="rotate(90,102,111)">
+                                <circle class="cart__wheel-stroke" cx="102" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" />
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </div>
         </div>
     </div>
-</main>
 </body>
 {%endblock content%}

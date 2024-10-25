@@ -1,0 +1,14 @@
+@import url(main.css);
+
+body{
+    overflow: hidden;
+    font-family: "Gilman", sans-serif;
+}
+
+q[lang=en]{
+    font-size: 50px;
+}
+
+blockquote[lang="ru"] {
+    font-weight: bold;
+}

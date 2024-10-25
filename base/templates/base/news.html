@@ -2,16 +2,29 @@
 {% load static %}
 {%block title %} News {%endblock%}
 {% block content %}
-<body>
-    <h1>News List</h1>
-    {% for news in news_list %}
-        <div class="news-item">
-            <div class="news-details">
-                <h2>{{ news.title }}</h2>
-                <p>{{ news.short_description }}... <a href = "{% url 'news_detailed' news.id %}">read in details</a></p>
-            </div>
-            <img src="{{ news.image.url }}" alt="{{ news.title }}" class="news-image">
-        </div>
-    {% endfor %}
+<link rel="stylesheet" href="{% static 'css/news_style.css' %}">
+<head>
+    <script src="{%static 'js/news.js'%}"></script>
+</head>
+<body onload="selectNews(1)">
+    <div class="page-container">
+        <aside class="news-container">
+            <ul class="news-list">
+                {% for new in news_list %}
+                    <li class="news-item" onclick="selectNews({{new.id}})" data-title="{{new.title}}"
+                                            data-image="{{new.image.url}}"
+                                            data-description="{{new.short_description}}">
+                        <p class="news-title">{{ new.title }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        <main class="news-details">
+            <h1 id="details-title"></h1>
+            <p id="details-description"></p>
+            <a class="details-link" id="details-link">Read All</a>
+            <img class="details-image" id="details-image" src="" alt="Image">
+        </main>
+    </div>
 </body>
 {%endblock%}

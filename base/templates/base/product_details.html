@@ -1,21 +1,26 @@
 {% extends "base.html" %}
 {% load static %}
-{%block title %} Details {%endblock%}
+{% block title %} Details {% endblock %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/product_style.css' %}">
 <body>
-    <h1>{{ product.name }}</h1>
-    <p>Description: {{ product.description }}</p>
-    <p>Price: {{ product.price }}</p>
-    <p>Unit: {{ product.get_unit_display }}</p>
-    <p>Category: {{ product.get_category_display }}</p>
-    <p>Amount available: {{ product.amount }}</p>
-    <form method="post" action="{% url 'add_to_cart' product.id %}">
-        {% csrf_token %}
-        <button type="submit" style="display: flex; align-items: center;">
-            <img src="{% static 'general_images/cart.png' %}" alt="Add to Cart" style="width: 20px; height: 20px; margin-right: 5px;">
-            Add to Cart
-        </button>
-    </form>
-    <a href="{% url 'home' %}">Back to Products</a> 
+    <div class="product-container">
+        <h1>{{ product.name }}</h1>
+        <div class="product-info">
+            <p>Description: {{ product.description }}</p>
+            <p>Price: {{ product.price }}</p>
+            <p>Unit: {{ product.get_unit_display }}</p>
+            <p>Category: {{ product.get_category_display }}</p>
+            <p>Amount available: {{ product.amount }}</p>
+        </div>
+        <form method="post" action="{% url 'add_to_cart' product.id %}">
+            {% csrf_token %}
+            <button type="submit">
+                <img src="{% static 'general_images/cart.png' %}" alt="Add to Cart">
+                Add to Cart
+            </button>
+        </form>
+        <a class="back-link" href="{% url 'home' %}">Back to Products</a>
+    </div>
 </body>
-{%endblock%}
+{% endblock %}

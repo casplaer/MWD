@@ -19,7 +19,6 @@
                 <ul>
                     {% for item in order.items.all %}
                         <li>{{ item.product.name }} - Quantity: {{ item.quantity }}</li>
-                        <!-- Add other product details as needed -->
                     {% endfor %}
                 </ul>
             </li>

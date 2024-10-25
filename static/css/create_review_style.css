@@ -1,0 +1,38 @@
+@import url(main.css);
+
+body{
+    overflow: hidden;
+    font-family: 'Gilam', sans-serif;
+}
+
+.main-text{
+    font-family: 'Gilam', sans-serif;
+    font-size: 2.5rem;
+    color: #b38f00;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+p{
+    color: #b38f00;
+    display: block;
+    text-align: center;
+    font-size: 30px
+}
+
+.form-container{
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.8); 
+    text-align: center;
+}
+
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: 2px solid #b38f00;
+}
+
+input[type="number"]:focus,
+textarea:focus {
+    outline: 2px solid #b38f00;
+}

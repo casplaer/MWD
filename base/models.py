@@ -70,7 +70,7 @@ class New(models.Model):
     
     @property
     def short_description(self):
-        return self.description[:20]
+        return self.description[:50]
     
 class FAQ(models.Model):
     question = models.CharField(max_length=255)

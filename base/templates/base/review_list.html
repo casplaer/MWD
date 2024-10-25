@@ -1,15 +1,24 @@
 {% extends "base.html" %}
 {% load static %}
-{%block title %} About Us {%endblock%}
+{% block title %} Reviews {% endblock %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/reviews_style.css' %}">
 <body>
-    <h1>Review List</h1>
-    <ul>
-        {% for review in reviews %}
-        <li>{{ review.text }} - {{ review.rating }} by {{ review.user.username }} on {{ review.created_at }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'create_review' %}">Create a Review</a>
+    <div class="review-container">
+        <h1>Reviews</h1>
+        <ul class="review-list">
+            {% for review in reviews %}
+            <li class="review-item">
+                <blockquote>
+                    <p class="review-text">{{ review.text }}</p>
+                    <footer class="review-footer"> - {{ review.user.username }}, {{ review.created_at }}</footer>
+                </blockquote>
+                <div class="review-rating">Rating: {{ review.rating }}/10</div>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'create_review' %}" class="review-link">Create a Review</a>
+    </div>
 </body>
 </html>
-{%endblock%}
+{% endblock %}

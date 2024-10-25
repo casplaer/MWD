@@ -2,13 +2,16 @@
 {% load static %}
 {%block title %} About Us {%endblock%}
 {% block content %}
-    <div class="container mt-5">
-        <h1 class="text-center">About "Everything and Always"</h1>
+<link rel="stylesheet" href="{% static "css/about_style.css" %}">
 
-        <div class="text-center mb-4">
-            {% if about_us.logo %}
-                <img src="{{ about_us.logo.url }}" alt="Logo" class="img-fluid" style="max-width: 200px;">
-            {% endif %}
+    <div class="page-container">
+        <div class="about-us-container">
+            <h1 class="main-text">About "productcity"</h1>
+            <div class="text-center mb-4">
+                {% if about_us.logo %}
+                    <img src="{{ about_us.logo.url }}" alt="Logo" class="img-fluid" style="max-width: 200px;">
+                {% endif %}
+            </div>
         </div>
 
         <div class="card mb-4">
@@ -38,16 +41,16 @@
             </div>
         </div>
 
-        <div class="card mb-4">
-            <div class="card-header">
-                <h4>Certificate</h4>
-            </div>
-            <div class="card-body">
-                {% if about_us.certificate %}
-                    <img src="{% static 'general_images/certificate.jfif'%}" alt="Certificate" class="img-fluid">
-                {% else %}
-                    <p>No certificates.</p>
-                {% endif %}
+        <div class="certificate">
+            <h1>Сертификат</h1>
+            <h2>Выданный компании PRODUCTCITY</h2>
+            <p>Настоящим подтверждается, что</p>
+            <p><strong>PRODUCTCITY</strong></p>
+            <p>является обладателем этого сертификата.</p>
+            <p>Выдано от Президента мира</p>
+            <div class="signature">
+                ______________________<br>
+                Подпись Президента
             </div>
         </div>
 
@@ -57,7 +60,7 @@
             </div>
             <div class="card-body">
                 {% if about_us.video %}
-                    <video controls class="img-fluid" style="width: 100%; height: auto;">
+                    <video controls class="video" >
                         <source src="{{ about_us.video.url }}" type="video/mp4"> 
                         Your browser doesn't suppor videos.
                     </video>

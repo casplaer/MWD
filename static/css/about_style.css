@@ -1,0 +1,55 @@
+@import url(main.css);
+
+body{
+    background-image: none;
+    font-family: "Gilman", sans-serif;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.navbar{
+    background-color: black;
+}
+
+.page-container{
+    text-align: center;
+    align-items: center;
+}
+
+.about-us-container {
+    width: auto;
+    position: relative;
+}
+
+.main-text{
+    text-transform: uppercase;
+}
+
+.img-fluid{
+    background-color: black;
+}
+
+.video{
+    width: 25%; 
+    height: auto;
+}
+
+.certificate {
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 15px;
+    width: 600px;
+    position: relative;
+    left: 33%;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.certificate .inner {
+    padding: 25px;
+    background: #222;
+    color: #fff;
+    border-radius: var(--border-radius);
+  }

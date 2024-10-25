@@ -1,0 +1,141 @@
+@import url(main.css);
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family:  'Gilam', sans-serif;
+    background-color: rgba(240, 240, 224, 0.85);
+    color: #333;
+    overflow: hidden;
+}
+
+.review-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: rgba(240, 240, 224, 0.85);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    font-size: 2.8rem;
+    color: #b38f00;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.review-list {
+    list-style-type: none;
+    max-height: 600px;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+}
+
+.review-item {
+    font-family: 'Gilam', sans-serif;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+.review-item:first-child {
+    border-top: 2px solid #b38f00;
+}
+
+.review-item:last-child {
+    border-bottom: 2px solid #b38f00;
+}
+
+.review-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+    quotes: "?" "?" "?" "?";
+}
+
+blockquote {
+    font-style: italic;
+    color: #666;
+    position: relative;
+    padding-left: 20px;
+}
+
+blockquote:before {
+    content: open-quote;
+    font-size: 2rem;
+    color: #b38f00;
+    position: absolute;
+    left: 0;
+    top: -5px;
+}
+
+blockquote:after {
+    content: close-quote;
+    font-size: 2rem;
+    color: #b38f00;
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+}
+
+.review-rating {
+    font-size: 1rem;
+    color: #b38f00;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.review-link {
+    display: inline-block;
+    background-color: #b38f00;
+    color: #fff;
+    padding: 10px 20px;
+    margin-top: 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.review-link:link {
+    color: #fff;
+}
+
+.review-link:visited {
+    color: #e0e0e0;
+}
+
+.review-link:hover {
+    background-color: #d4a100;
+    color: #fff;
+}
+
+.review-link:active {
+    background-color: #a67c00;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: 2px solid #b38f00;
+}
+
+input:required {
+    border: 2px solid #b38f00;
+}
+
+input:disabled {
+    background-color: #f0f0f0;
+    color: #aaa;
+}
+
+.review-item:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.review-item:nth-child(odd) {
+    background-color: #fafafa;
+}

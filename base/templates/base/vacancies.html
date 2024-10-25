@@ -1,29 +1,21 @@
 {% extends "base.html" %}
 {% load static %}
-{%block title %} About Us {%endblock%}
+{%block title %} CAREERS {%endblock%}
 {% block content %}
+<link rel="stylesheet" href="{%static 'css/vacancies_style.css' %}">
 <body>
-    <div class="container mt-5">
-        <h1>Job List</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Job Title</th>
-                    <th>Description</th>
-                    <th>Salary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for job in jobs %}
-                <tr>
-                    <td>{{ job.title }}</td>
-                    <td>{{ job.description }}</td>
-                    <td>{{ job.salary }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="job-container">
+        <h1>Vacancies</h1>
+        <div class="job-list">
+            {% for job in jobs %}
+            <div class="job-card">
+                <h2 class="job-title">{{ job.title }}</h2>
+                <p class="job-description">{{ job.description }}</p>
+                <p class="job-salary">Salary: <span>{{ job.salary }}</span></p>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="clear: both;"></div>
     </div>
 </body>
-</html>
 {%endblock%}

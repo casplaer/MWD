@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
-{%block title %} About Us {%endblock%}
+{%block title %} New Review {%endblock%}
 {% block content %}
-
+<link rel="stylesheet" href="{% static 'css/create_review_style.css' %}">
 <body>
-    <h1>Create Review</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+    <div class="form-container">
+        <h1 class="main-text">Create Review</h1>
+        <form class="review-form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 {%endblock%}

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дом, продукты и корзинка</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #87CEEB; /* Цвет неба */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .house {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background-color: yellow;
+            animation: houseDisappear 10s 3s forwards;
+        }
+
+        .roof {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 100px solid brown; 
+        }
+
+        .products {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .product {
+            animation: fallToBasket 3s ease-in-out forwards;
+        }
+
+        .product-circle {
+            width: 50px;
+            height: 50px;
+            background-color: tomato;
+            border-radius: 50%;
+        }
+
+        .product-triangle {
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 50px solid green;
+        }
+
+        .product-star {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid gold;
+            position: relative;
+            transform: rotate(35deg);
+        }
+
+        .product-star:before {
+            content: '';
+            position: absolute;
+            top: -18px;
+            left: -15px;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid gold;
+            transform: rotate(-70deg);
+        }
+
+        .basket {
+            position: absolute;
+            top: 300px;
+            left: 20px;
+            width: 200px;
+            height: 90px;
+            background-color: brown;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            border-bottom: 5px solid #654321;
+            overflow: hidden;
+            animation: attachToCloud 10s 3s forwards;
+        }
+
+        .cloud {
+            position: absolute;
+            top: 300px;
+            left: -200px;
+            width: 200px;
+            height: 100px;
+            background-color: white;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: moveCloud 10s 3s forwards;
+        }
+
+        .productcity {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            font-weight: bold;
+            color: #FF4500;
+            opacity: 0;
+            animation: showText 2s ease-in 13s forwards;
+        }
+
+        @keyframes fallToBasket {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(300px);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(300px);
+            }
+        }
+
+        @keyframes houseDisappear{
+            0%{
+                opacity: 1;
+            }
+            99%{
+                opacity: 1;
+            }
+            100%{
+                opacity 0;
+            }
+        }
+
+        @keyframes moveCloud {
+            0% {
+                top: 450px;
+                left: -200px;
+            }
+            50% {
+                top: 450px;
+                left: 300px; 
+            }
+            99%{
+                opacity: 1;
+            }
+            100% {
+                top: 450px;
+                left: 600px; 
+                opacity: 0;
+            }
+        }
+
+        @keyframes attachToCloud {
+            0% {
+                top: 300px;
+                left: 20px;
+            }
+            50% {
+                top: 420px;
+                left: 300px;
+            }
+            99%{
+                opacity: 1;
+            }
+            100% {
+                top: 420px;
+                left: 600px;
+                opacity: 0;
+            }
+        }
+
+        @keyframes showText {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="products">
+    <div class="product product-circle"></div>
+    <div class="product product-triangle"></div>
+    <div class="product product-star"></div>
+</div>
+
+<div class="basket"></div>
+
+<div class="cloud"></div>
+
+<div class="house">
+    <div class="roof"></div>
+</div>
+
+<div class="productcity">PRODUCTCITY</div>
+
+</body>
+</html>

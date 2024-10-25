@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{%load static%}
+{%block title%} Catalog {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/catalog_style.css' %}">
+<body>
+    <div class="page-container">
+        <div class="product-container">
+            <ul class="product-list">
+                {% for product in products %}
+                    <li class="product-item">
+                        <a href="{% url 'product_details' product.id %}" class="product-name">{{ product.name }}</a>
+                        <p class="product-description">{{ product.description }}</p>
+                        <span class="product-unit">Unit: {{ product.get_unit_display }}</span>
+                        <span class="product-category">Category: {{ product.get_category_display }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+{% endblock %}

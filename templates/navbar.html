@@ -12,6 +12,7 @@
         </div>
 
         <div class="navbar-links">
+            <a href="/catalog">CATALOG</a>
             <a href="/vacancies">CAREERS</a>
             <a href="/reviews">REVIEWS</a>
             <a href="/news">NEWS</a>
@@ -22,6 +23,13 @@
         </div>
 
         <div class="navbar-right">
+            {%if request.user.is_authenticated%}
+            <div class="navbar-links">
+                <a href='/cart'>CART</a>
+                <a href='/order_list'>ORDER LIST</a>
+                <a href="{% url 'logout' %}">LOGOUT</a>
+            </div>
+            {%else%}
             <div class="account-dropdown">
                 <span class="account-toggle">ACCOUNT</span>
                 <div class="dropdown-menu">
@@ -29,6 +37,7 @@
                     <a href="/register">CREATE ACCOUNT</a>
                 </div>
             </div>
+            {%endif%}
         </div>
 
 

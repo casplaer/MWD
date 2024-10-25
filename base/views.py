@@ -29,7 +29,7 @@ def home(request, category=None):
     current_time = timezone.now()
     user_tz = pytz.timezone('Europe/Moscow')
     user_time = current_time.astimezone(user_tz)
-    latest_new = New.objects.latest('id')
+    news_list = New.objects.all()
     try:
         if request.user.is_authenticated:
             profile = Profile.objects.get(user=request.user)
@@ -38,12 +38,6 @@ def home(request, category=None):
             user_role = 'none'
     except Profile.DoesNotExist:
         user_role = 'none'
-
-    # api_url = "https://catfact.ninja/fact"
-    # response = requests.get(api_url)
-
-    # if response.status_code == 200:
-    #     cat_fact = response.json()['fact']
 
     products = Product.objects.all()
 
@@ -61,7 +55,7 @@ def home(request, category=None):
     context = {
         'products': products,
         'user_role': user_role,
-        'latest_new':latest_new,
+        'news_list': news_list,
         'user_timezone': user_tz,
         'current_time': user_time,
         "most_popular_category": most_popular_category,
@@ -121,7 +115,7 @@ def create_review(request):
             review = form.save(commit=False)
             review.user = request.user
             review.save()
-            return redirect('base/review_list.html')
+            return redirect("review_list")
     else:
         form = ReviewForm()
     return render(request, "base/review.html", {'form': form})
@@ -352,3 +346,15 @@ def update_cart(request, cart_product_id, action):
     
     cart_item.save()
     return redirect('/cart') 
+
+def catalog(request, category=None):
+    products = Product.objects.all()
+
+    context = {
+        'products': products,
+    }
+
+    return render(request, "base/catalog.html", context=context)
+
+def anim(request):
+    return render(request, "base/anim.html")

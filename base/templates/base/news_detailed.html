@@ -2,14 +2,14 @@
 {% load static %}
 {%block title %} {{ news_item.title }}{%endblock%}
 {% block content %}
-    {% include 'navbar.html' %}
-    <div class="container mt-5">
-        <div class="text-center">
-            <h1>{{ news_item.title }}</h1>
-            <img src="{{ news_item.image.url }}" class="img-fluid my-4" alt="{{ news_item.title }}">
-            <p>{{ news_item.description }}</p>
-            <a href="{% url 'news' %}" class="btn btn-secondary mt-4">Back to news</a>
-        </div>
+<link rel="stylesheet" href="{% static 'css/news_detailed_style.css' %}">
+<body>
+    <div class="news-container">
+        <a href="{% url 'news' %}" class="back-link">Back to news</a>
+        <h1>{{ news_item.title }}</h1>
+        <img src="{{ news_item.image.url }}" class="news-image" alt="{{ news_item.title }}">
+        <p class="news-description">{{ news_item.description }}</p>
+        <a href="{% url 'news' %}" class="back-link">Back to news</a>
     </div>
 </body>
 {%endblock%}

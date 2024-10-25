@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
-{%block title %} About Us {%endblock%}
+{%block title %} Contact {%endblock%}
 {% block content %}
+<link rel="stylesheet" href="{% static "css/contact_style.css" %}">
 
-<body>
-    <h1>Contact List</h1>
-    <ul>
+<h1>Contact List</h1>
+<div class="contact-container">
+    <ul class="contact-list">
         {% for contact in contacts %}
-            <li class="clearfix">
-                <img src="{{ contact.image.url }}" alt="{{ contact.title }}" class="img-responsive" style="width: 10%; float: left; margin-right: 10px;">
-                <div style="float: left;">
+            <li class="contact-item">
+                <img src="{{ contact.image.url }}" alt="{{ contact.title }}" class="contact-image">
+                <div class="contact-details">
                     <p>Title: {{ contact.title }}</p>
                     <p>Description: {{ contact.description }}</p>
                     <p>Phone Number: {{ contact.phone_number }}</p>
@@ -18,6 +19,8 @@
             </li>
         {% endfor %}
     </ul>
-</body>
+</div>
+
+
 
 {%endblock%}
