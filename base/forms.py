@@ -31,6 +31,7 @@ class CustomUserCreationForm(UserCreationForm):
 
 class ReviewForm(forms.ModelForm):
     rating = forms.IntegerField(label='Rating', min_value=0, max_value=10)  
+    test_field = forms.DateField(label='Test')
 
     class Meta:
         model = Review

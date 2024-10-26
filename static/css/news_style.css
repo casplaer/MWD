@@ -89,3 +89,14 @@ body{
     flex: 1;
     width: 100%;
 }
+
+p{
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+#details-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }

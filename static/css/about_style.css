@@ -6,6 +6,7 @@ body{
     justify-content: center;
     align-items: center;
     margin: 0;
+    text-indent: 40px;
 }
 
 .navbar{
@@ -35,21 +36,6 @@ body{
     height: auto;
 }
 
-.certificate {
-    background-color: white;
-    border: 5px solid black;
-    border-radius: 15px;
-    width: 600px;
-    position: relative;
-    left: 33%;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
+.signature{
+    background-image: linear-gradient(red, yellow);
 }
-
-.certificate .inner {
-    padding: 25px;
-    background: #222;
-    color: #fff;
-    border-radius: var(--border-radius);
-  }

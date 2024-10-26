@@ -2,6 +2,23 @@
 {% load static %}
 {%block title %} About Us {%endblock%}
 {% block content %}
+<style>
+    .certificate {
+    width: 600px;
+    padding: 20px;
+    left: 32%;
+    position: relative;
+    text-align: center;
+    border: 20px solid transparent; 
+    border-image-source: url("{% static 'general_images/bel.jpg' %}"); 
+    border-image-slice: 30; 
+    border-image-width: 20px; 
+    border-image-outset: 0;
+    border-image-repeat: stretch;  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+</style>
 <link rel="stylesheet" href="{% static "css/about_style.css" %}">
 
     <div class="page-container">
@@ -18,7 +35,7 @@
             <div class="card-header">
                 <h4>About</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="line-height: 25px;">
                 <p>{{ about_us.information }}</p>
             </div>
         </div>

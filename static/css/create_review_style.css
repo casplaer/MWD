@@ -26,13 +26,17 @@ p{
     text-align: center;
 }
 
-
 input[type="text"]:focus,
 textarea:focus {
     outline: 2px solid #b38f00;
 }
 
-input[type="number"]:focus,
-textarea:focus {
-    outline: 2px solid #b38f00;
+input[type="number"]:focus{
+    outline: 2px solid red;
+}
+
+#id_test_field{
+    pointer-events: none;
+    user-select: none; 
+    cursor: default;
 }
