@@ -1,0 +1,535 @@
+{% load static %}
+{%include 'navbar.html'%}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лаба 3</title>
+    <link rel="stylesheet" href="{% static 'css/lab3.css' %}">
+    <script src="{% static 'js/lab3.js' %}" defer></script>
+    <script>
+        const sliderSettings = {
+            loop: {{ settings.loop|yesno:"true,false" }},
+            navs: {{ settings.navs|yesno:"true,false" }},
+            pags: {{ settings.pags|yesno:"true,false" }},
+            auto: {{ settings.auto|yesno:"true,false" }},
+            stopMouseHover: {{ settings.stopMouseHover|yesno:"true,false" }},
+            delay: {{ settings.delay }}
+        };
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchButton = document.getElementById("searchButton");
+            const searchInput = document.getElementById("searchInput");
+            const table = document.getElementById("contactsTable");
+            const rows = Array.from(table.rows).slice(1);
+            const rowsPerPage = 3;
+            let currentPage = 1;
+        
+            const totalPages = Math.ceil(rows.length / rowsPerPage);
+        
+            const paginationContainer = document.getElementById("pagination");
+            const contactDetails = document.getElementById("contactDetails");
+        
+            const contactTitle = document.getElementById("contactTitle");
+            const contactDescription = document.getElementById("contactDescription");
+            const contactPhone = document.getElementById("contactPhone");
+            const contactEmail = document.getElementById("contactEmail");
+            const contactImage = document.getElementById("contactImage");
+        
+            function displayPage(page) {
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+        
+                rows.forEach(row => row.style.display = 'none');
+        
+                for (let i = start; i < end && i < rows.length; i++) {
+                    rows[i].style.display = '';
+                }
+            }
+        
+            function createPagination() {
+                paginationContainer.innerHTML = '';
+        
+                const prevButton = document.createElement("button");
+                prevButton.innerText = "Предыдущая";
+                prevButton.disabled = currentPage === 1;
+                prevButton.addEventListener("click", () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        displayPage(currentPage);
+                        createPagination();
+                    }
+                });
+                paginationContainer.appendChild(prevButton);
+        
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement("button");
+                    pageButton.innerText = i;
+                    pageButton.classList.add("page-button");
+                    if (i === currentPage) {
+                        pageButton.classList.add("active");
+                    }
+                    pageButton.addEventListener("click", () => {
+                        currentPage = i;
+                        displayPage(currentPage);
+                        createPagination();
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+        
+                const nextButton = document.createElement("button");
+                nextButton.innerText = "Следующая";
+                nextButton.disabled = currentPage === totalPages;
+                nextButton.addEventListener("click", () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        displayPage(currentPage);
+                        createPagination();
+                    }
+                });
+                paginationContainer.appendChild(nextButton);
+            }
+        
+            displayPage(currentPage);
+            createPagination();
+        
+            function filterRows() {
+                const searchText = searchInput.value.toLowerCase();
+        
+                rows.forEach(row => {
+                    const rowText = row.innerText.toLowerCase();
+                    if (rowText.includes(searchText)) {
+                        row.style.display = ''; 
+                    } else {
+                        row.style.display = 'none'; 
+                    }
+                });
+            }
+        
+            searchButton.addEventListener("click", filterRows);
+        
+            searchInput.addEventListener("input", filterRows);
+        
+            rows.forEach(row => {
+                row.addEventListener("click", function() {
+                    const cells = row.cells;
+                    contactTitle.textContent = cells[0].textContent;
+                    contactDescription.textContent = cells[1].textContent;
+                    contactPhone.textContent = cells[2].textContent;
+                    contactEmail.textContent = cells[3].textContent;
+                    contactImage.src = cells[4].querySelector('img').src;
+                    contactDetails.style.display = "block";
+                });
+            });
+
+            const addButton = document.getElementById("addButton");
+            const addForm = document.getElementById("addForm");
+            const employeeForm = document.getElementById("employeeForm");
+            const submitButton = document.getElementById("submitButton");
+            const employeeName = document.getElementById("employeeName");
+            const employeeDescription = document.getElementById("employeeDescription");
+            const employeePhone = document.getElementById("employeePhone");
+            const employeeEmail = document.getElementById("employeeEmail");
+            const employeeImage = document.getElementById("employeeImage");
+            const phoneError = document.getElementById("phoneError");
+            const emailError = document.getElementById("emailError");
+            const tableForm = document.getElementById("contactsTable").getElementsByTagName("tbody")[0];
+
+            const phonePattern = /^(?:\+375\s?\(?\d{2}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}|\d{2}\s?\(?\d{2}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2})$/;
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            function validatePhone() {
+                if (!phonePattern.test(employeePhone.value)) {
+                    employeePhone.style.border = "2px solid red";
+                    employeePhone.style.backgroundColor = "#f8d7da";
+                    phoneError.style.display = "block";
+                } else {
+                    employeePhone.style.border = "";
+                    employeePhone.style.backgroundColor = "";
+                    phoneError.style.display = "none";
+                }
+                toggleSubmitButton();
+            }
+
+            function validateEmail() {
+                if (!emailPattern.test(employeeEmail.value)) {
+                    employeeEmail.style.border = "2px solid red";
+                    employeeEmail.style.backgroundColor = "#f8d7da";
+                    emailError.style.display = "block";
+                } else {
+                    employeeEmail.style.border = "";
+                    employeeEmail.style.backgroundColor = "";
+                    emailError.style.display = "none";
+                }
+                toggleSubmitButton();
+            }
+
+            function toggleSubmitButton() {
+                if (employeeName.value && employeeDescription.value && employeePhone.value && employeeEmail.value && employeeImage.files.length > 0  && phoneError.style.display === "none" && emailError.style.display === "none") {
+                    submitButton.disabled = false;
+                } else {
+                    console.log(employeeImage.files.length);
+                    submitButton.disabled = true;
+                }
+            }
+
+            addButton.addEventListener("click", function () {
+                addForm.style.display = "block";
+            });
+
+            employeePhone.addEventListener("input", validatePhone);
+            employeeEmail.addEventListener("input", validateEmail);
+
+            employeeForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+            
+                const formData = new FormData();
+                formData.append('title', employeeName.value);
+                formData.append('description', employeeDescription.value);
+                formData.append('phone_number', employeePhone.value);
+                formData.append('email', employeeEmail.value);
+                formData.append('image', employeeImage.files[0]);
+            
+                submitButton.disabled = true;
+            
+                fetch("{% url 'add_contact' %}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}' 
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Контакт успешно добавлен.');
+            
+                        window.location.reload(); 
+                    } else {
+                        alert('Ошибка при добавлении контакта: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    alert('Произошла ошибка при добавлении контакта.');
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                });
+            });
+            
+            const rewardButton = document.getElementById("rewardButton");
+            const rewardMessageDiv = document.getElementById("rewardMessage");
+
+            rewardButton.addEventListener("click", function () {
+                const selectedEmployees = [];
+                
+                const checkboxes = document.querySelectorAll(".contactCheckbox");
+
+                checkboxes.forEach(function (checkbox, index) {
+                    if (checkbox.checked) {
+                        const employeeName = checkbox.closest('tr').querySelector('td').textContent;
+                        selectedEmployees.push(employeeName);
+                    }
+                });
+
+                if (selectedEmployees.length > 0) {
+                    const rewardMessage = "Премированные сотрудники: " + selectedEmployees.join(", ") + ".";
+                    rewardMessageDiv.textContent = rewardMessage;
+                } else {
+                    rewardMessageDiv.textContent = "Пожалуйста, выберите хотя бы одного сотрудника для премирования.";
+                }
+            });
+
+            const styleToggle = document.getElementById("styleToggle");
+            const styleControls = document.getElementById("styleControls");
+            const fontSizeSelect = document.getElementById("fontSize");
+            const fontColorInput = document.getElementById("fontColor");
+            const bgColorInput = document.getElementById("bgColor");
+        
+            styleToggle.addEventListener("change", function () {
+                if (styleToggle.checked) {
+                    styleControls.style.display = "block"; 
+                } else {
+                    styleControls.style.display = "none"; 
+                }
+            });
+        
+            fontSizeSelect.addEventListener("change", function () {
+                document.body.style.fontSize = fontSizeSelect.value;
+            });
+        
+            fontColorInput.addEventListener("input", function () {
+                document.body.style.color = fontColorInput.value;
+            });
+        
+            bgColorInput.addEventListener("input", function () {
+                document.body.style.backgroundColor = bgColorInput.value;
+            });
+
+            const productProductsPerPage = 3; 
+            const productProducts = document.querySelectorAll('.product-card');
+            const productTotalProducts = productProducts.length;
+            const productTotalPages = Math.ceil(productTotalProducts / productProductsPerPage);
+            let productCurrentPage = 1;
+
+            function productShowPage(productPage) {
+                productProducts.forEach((product, productIndex) => {
+                    product.style.display = 'none';
+                });
+
+                const productStart = (productPage - 1) * productProductsPerPage;
+                const productEnd = productStart + productProductsPerPage;
+                for (let productIndex = productStart; productIndex < productEnd; productIndex++) {
+                    if (productProducts[productIndex]) {
+                        productProducts[productIndex].style.display = 'block';
+                    }
+                }
+            }
+
+            function productCreatePagination() {
+                const productPaginationContainer = document.getElementById('product-pagination');
+                productPaginationContainer.innerHTML = ''; 
+
+                for (let productPage = 1; productPage <= productTotalPages; productPage++) {
+                    const productButton = document.createElement('button');
+                    productButton.textContent = productPage;
+                    productButton.addEventListener('click', function() {
+                        productCurrentPage = productPage;
+                        productShowPage(productCurrentPage);
+                    });
+                    productPaginationContainer.appendChild(productButton);
+                }
+            }
+
+            productShowPage(productCurrentPage);
+
+            productCreatePagination();
+
+            const popup = document.getElementById('age-popup');
+            const submitBDayButton = document.getElementById('submit-btn');
+            const birthdateInput = document.getElementById('birthdate');
+            const warningMessage = document.getElementById('warning-message');
+
+            submitBDayButton.addEventListener('click', function() {
+                const birthdate = birthdateInput.value;
+
+                if (!birthdate) {
+                    alert("Пожалуйста, введите дату рождения.");
+                    return;
+                }
+
+                const birthDate = new Date(birthdate);
+                const today = new Date();
+                const age = today.getFullYear() - birthDate.getFullYear();
+                const month = today.getMonth() - birthDate.getMonth();
+                const day = today.getDate() - birthDate.getDate();
+
+                if (month < 0 || (month === 0 && day < 0)) {
+                    age--;
+                }
+
+                const daysOfWeek = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+                const birthDayOfWeek = daysOfWeek[birthDate.getDay()];
+
+                if (age >= 18) {
+                    popup.style.display = 'none';
+
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = `
+                        <p>Ваш возраст: ${age} лет</p>
+                        <p>Ваш день недели рождения: ${birthDayOfWeek}</p>
+                        <p>Вы совершеннолетний. Можете использовать сайт.</p>
+                    `;
+                } else {
+                    warningMessage.style.display = 'block';
+                    alert("Вы несовершеннолетний. Пожалуйста, получите разрешение от родителей для использования сайта.");
+                }
+            });
+        });
+        
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="age-popup">
+            <div class="popup-content">
+                <h3>Введите вашу дату рождения</h3>
+                <input type="date" id="birthdate">
+                <button id="submit-btn">Подтвердить</button>
+                <p id="warning-message" style="color: red; display: none;">Вы должны быть старше 18 лет для использования сайта.</p>
+            </div>
+        </div>
+    
+        <div id="result"></div>
+
+        <div class="carousel-container">
+            <div class="carousel">
+                {% for image in images %}
+                    <div class="item active">
+                        <a href="{{image.link}}">
+                            <img src="{{image.src}}">
+                            <p class="caption">{{image.caption}} </p>
+                        </a>
+                    </div>
+                {%endfor%}
+                
+                <button class="btn prev">❮</button>
+                <button class="btn next">❯</button>
+            </div>
+            <div class="dots"></div>
+            {% if form %}
+            <h3 style="color:black">Настройки слайдера</h3>
+            <form method="POST">
+              {% csrf_token %}
+              <div>
+                <label for="id_loop">Цикличность:</label>
+                {{ form.loop }}
+              </div>
+              <div>
+                <label for="id_navs">Навигационные стрелки:</label>
+                {{ form.navs }}
+              </div>
+              <div>
+                <label for="id_pags">Пагинация (точки):</label>
+                {{ form.pags }}
+              </div>
+              <div>
+                <label for="id_auto">Автопереключение:</label>
+                {{ form.auto }}
+              </div>
+              <div>
+                <label for="id_stopMouseHover">Остановка при наведении:</label>
+                {{ form.stopMouseHover }}
+              </div>
+              <div>
+                <label for="id_delay">Задержка (в секундах):</label>
+                {{ form.delay }}
+              </div>
+              <button type="submit">Сохранить настройки</button>
+            </form>
+          {% else %}
+            <p>Вы не имеете прав для изменения настроек.</p>
+          {% endif %}
+          
+        </div>     
+
+        <div id="countdown-timer">
+            <p>Оставшееся время: <span id="timer"></span></p>
+        </div>
+        <h1>Список сотрудников</h1>
+
+        <div>
+            <input type="text" id="searchInput" placeholder="Введите для поиска...">
+            <button id="searchButton" onclick="filterRows()">Найти</button>
+        </div>
+
+        <div>
+            <button id="addButton">Добавить</button>
+            <div id="addForm" style="display: none;">
+                <h2>Добавить сотрудника</h2>
+                <form id="employeeForm">
+                    <div>
+                        <label for="employeeName">ФИО:</label>
+                        <input type="text" id="employeeName" required>
+                    </div>
+                    <div>
+                        <label for="employeeDescription">Описание:</label>
+                        <input type="text" id="employeeDescription" required>
+                    </div>
+                    <div>
+                        <label for="employeePhone">Телефон:</label>
+                        <input type="text" id="employeePhone" required>
+                        <p id="phoneError" style="color: red; display: none;">Неверный формат телефона</p>
+                    </div>
+                    <div>
+                        <label for="employeeEmail">Почта:</label>
+                        <input type="email" id="employeeEmail" required>
+                        <p id="emailError" style="color: red; display: none;">Неверный формат почты</p>
+                    </div>
+                    <div>
+                        <label for="employeeImage">Фото:</label>
+                        <input type="file" id="employeeImage" accept="image/*" required>
+                    </div>
+                    <button type="submit" id="submitButton" disabled>Добавить в таблицу</button>
+                </form>
+            </div>
+        </div>
+        
+
+        <table id="contactsTable" >
+            <thead>
+                <tr>
+                    <th data-column="title" onclick="sortTable(0)">ФИО <span class="sort-indicator"></span></th>
+                    <th data-column="description" onclick="sortTable(1)">Описание <span class="sort-indicator"></span></th>
+                    <th data-column="phone_number" onclick="sortTable(2)">Телефон <span class="sort-indicator"></span></th>
+                    <th data-column="email" onclick="sortTable(3)">Почта <span class="sort-indicator"></span></th>
+                    <th>Фото</th>
+                    <th>Выбор</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.title }}</td>
+                    <td>{{ contact.description }}</td>
+                    <td>{{ contact.phone_number }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td><img src="{{ contact.image.url }}" alt="Фото сотрудника" width="50"></td>
+                    <td><input type="checkbox" class="contactCheckbox" data-contact-id="{{ contact.id }}"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="pagination" style="margin-bottom: 50px"></div>
+
+        <div id="contactDetails" style="display: none; margin-top: 20px;">
+            <h2>Детали сотрудника</h2>
+            <p><strong>ФИО:</strong> <span id="contactTitle"></span></p>
+            <p><strong>Описание:</strong> <span id="contactDescription"></span></p>
+            <p><strong>Телефон:</strong> <span id="contactPhone"></span></p>
+            <p><strong>Почта:</strong> <span id="contactEmail"></span></p>
+            <p><strong>Фото:</strong> <img id="contactImage" src="" alt="Фото сотрудника" width="100"></p>
+        </div>
+        <button id="rewardButton">Премировать</button>
+        <div id="rewardMessage"></div>
+
+        <label for="styleToggle">Изменить стиль страницы</label>
+        <input type="checkbox" id="styleToggle">
+
+        <div id="styleControls" style="display: none;">
+            <label for="fontSize">Размер шрифта:</label>
+            <select id="fontSize">
+                <option value="16px">16px</option>
+                <option value="18px">18px</option>
+                <option value="20px">20px</option>
+                <option value="22px">22px</option>
+                <option value="24px">24px</option>
+            </select>
+
+            <label for="fontColor">Цвет текста:</label>
+            <input type="color" id="fontColor" value="#000000">
+
+            <label for="bgColor">Цвет фона:</label>
+            <input type="color" id="bgColor" value="#ffffff">
+        </div>           
+        <div class="product-list">
+            {% for product in products %}
+                <div class="product-card">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p>Цена: {{ product.price }} ₽</p>
+                    <p>Количество: {{ product.amount }} {{ product.unit }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="product-pagination" id="product-pagination"></div>
+
+    </div>
+
+</body>
+</html>

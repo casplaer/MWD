@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from datetime import date
 import re
 
-from base.models import Order, Product, Review
+from base.models import Order, Product, Review, SliderSettings
 
 class CustomUserCreationForm(UserCreationForm):
     birth_date = forms.DateField(required=True, widget=forms.DateInput(attrs={'type': 'date'}))
@@ -49,3 +49,11 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'description', 'price', 'amount', 'unit', 'category']
+
+class SliderSettingsForm(forms.ModelForm):
+    class Meta:
+        model = SliderSettings
+        fields = ['loop', 'navs', 'pags', 'auto', 'stopMouseHover', 'delay']
+        widgets = {
+            'delay': forms.NumberInput(attrs={'min': 1}),
+        }

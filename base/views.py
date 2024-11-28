@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -9,12 +9,14 @@ import pytz
 import requests
 from django.db.models import Sum, F
 from django.shortcuts import render
-from .models import Product, CartItem
+from .models import Product, CartItem, SliderSettings
 import matplotlib.pyplot as plt
 import io
 import base64
+from django.core.paginator import Paginator
+import re
 
-from base.forms import CustomUserCreationForm, OrderForm, ProductForm, ReviewForm
+from base.forms import CustomUserCreationForm, OrderForm, ProductForm, ReviewForm, SliderSettingsForm
 from .models import FAQ, Cart, Contact, Coupon, Job, New, Order, Product, Profile, Review, CartItem, Partner, AboutUs
 
 def home(request, category=None):
@@ -358,3 +360,56 @@ def catalog(request, category=None):
 
 def anim(request):
     return render(request, "base/anim.html")
+
+def lab3(request):
+    settings = SliderSettings.objects.first()
+    contacts = Contact.objects.all()
+
+    paginator = Paginator(contacts, 3) 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    products = Product.objects.all()
+
+    if request.user.is_authenticated and request.user.is_staff:
+        if request.method == 'POST':
+            form = SliderSettingsForm(request.POST, instance=settings)
+            if form.is_valid():
+                form.save() 
+                return redirect('/lab3') 
+        else:
+            form = SliderSettingsForm(instance=settings)
+    else:
+        form = None
+
+    images = [
+        {'src': '/media/general_images/persona1.jpg', 'link': 'https://example.com/1', 'caption': 'Слайд 1'},
+        {'src': '/media/general_images/persona2.png', 'link': 'https://example.com/2', 'caption': 'Слайд 2'},
+        {'src': '/media/general_images/persona3.jpg', 'link': 'https://example.com/3', 'caption': 'Слайд 3'},
+    ]
+    context = {
+        'settings': settings,
+        'images': images,
+        'form': form,
+        'contacts': contacts,
+        'products': products,
+    }
+    return render(request, 'base/lab3.html', context)
+
+def add_contact(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        phone_number = request.POST.get('phone_number')
+        email = request.POST.get('email')
+        image = request.FILES.get('image')
+
+        Contact.objects.create(
+            title=title,
+            description=description,
+            phone_number=phone_number,
+            email=email,
+            image=image
+        )
+
+        return JsonResponse({'status': 'success', 'message': 'Контакт успешно добавлен.'})

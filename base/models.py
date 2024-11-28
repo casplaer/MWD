@@ -134,3 +134,14 @@ class AboutUs(models.Model):
 
     def __str__(self):
         return self.name
+    
+class SliderSettings(models.Model):
+    loop = models.BooleanField(default=False)
+    navs = models.BooleanField(default=True)
+    pags = models.BooleanField(default=True)
+    auto = models.BooleanField(default=True)
+    stopMouseHover = models.BooleanField(default=False)
+    delay = models.PositiveIntegerField(default=5) 
+
+    def __str__(self):
+        return "Настройки слайдера"    

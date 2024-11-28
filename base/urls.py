@@ -30,5 +30,7 @@ urlpatterns = [
     path('news_detailed/<int:news_id>/', views.news_detailed, name='news_detailed'),
     path('product/<int:product_id>/', views.product_details, name='product_details'),
     path('cart/update/<int:cart_product_id>/<str:action>/', views.update_cart, name='update_cart'),
-    path('anim/', views.anim)
+    path('anim/', views.anim),
+    path('lab3/', views.lab3, name='lab3'),
+    path('create-contact/', views.add_contact, name='add_contact'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
