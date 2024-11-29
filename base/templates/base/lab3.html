@@ -354,6 +354,13 @@
 </head>
 <body>
     <div class="container">
+        <div class="cart" style="background-image: url('{% static 'general_images/cart.png' %}');"></div>
+
+        <div class="product" id="product1" style="background-image: url('{% static 'general_images/product1.png' %}');"></div>
+        <div class="product" id="product2" style="background-image: url('{% static 'general_images/product2.png' %}');"></div>
+        <div class="product" id="product3" style="background-image: url('{% static 'general_images/product3.png' %}');"></div>
+        <div class="product" id="product4" style="background-image: url('{% static 'general_images/product4.png' %}');"></div>
+
         <div id="age-popup">
             <div class="popup-content">
                 <h3>Введите вашу дату рождения</h3>
@@ -528,8 +535,206 @@
         </div>
         
         <div class="product-pagination" id="product-pagination"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form id="jobForm">
+            <input type="text" id="title" placeholder="Job Title" required>
+            <input type="text" id="description" placeholder="Job Description" required>
+            <input type="number" id="salary" placeholder="Salary" required>
+            <input type="text" id="phone" placeholder="Phone" required>
+            <button type="submit">Add Job</button>
+        </form>
+
+        <button id="filterButton">Показать вакансии с зарплатой выше средней</button>
+
+        <h1>Все вакансии (1-й вариант: Прототипное наследование)</h1>
+        <div id="jobList1"></div>
+        
+        <h1>Все вакансии (2-й вариант: Классы и Наследование)</h1>
+        <div id="jobList2"></div>
 
     </div>
+    <script>
+        class Job {
+            constructor(title, description, salary, phone) {
+                this.title = title;
+                this.description = description;
+                this.salary = salary;
+                this.phone = phone;
+            }
+    
+            getTitle() {
+                return this.title;
+            }
+    
+            getDescription() {
+                return this.description;
+            }
+    
+            getSalary() {
+                return this.salary;
+            }
+    
+            getPhone() {
+                return this.phone;
+            }
+    
+            setTitle(title) {
+                this.title = title;
+            }
+    
+            setDescription(description) {
+                this.description = description;
+            }
+    
+            setSalary(salary) {
+                this.salary = salary;
+            }
+    
+            setPhone(phone) {
+                this.phone = phone;
+            }
+    
+            addJob() {
+                return {
+                    title: this.title,
+                    description: this.description,
+                    salary: this.salary,
+                    phone: this.phone
+                };
+            }
+    
+            static displayJobs(jobs, elementId) {
+                const jobListDiv = document.getElementById(elementId);
+                jobListDiv.innerHTML = '';  
+    
+                jobs.forEach((job, index) => {
+                    const jobInfo = `
+                        <p><strong>${index + 1}. ${job.title}</strong></p>
+                        <p>Описание: ${job.description}</p>
+                        <p>Зарплата: ${job.salary} руб.</p>
+                        <p>Телефон: ${job.phone}</p>
+                        <hr>
+                    `;
+                    jobListDiv.innerHTML += jobInfo;
+                });
+            }
+        }
+    
+        class HighSalaryJob extends Job {
+            constructor(title, description, salary, phone) {
+                super(title, description, salary, phone);
+            }
+    
+            static getAverageSalary(jobs) {
+                const totalSalary = jobs.reduce((acc, job) => acc + parseFloat(job.salary), 0);
+                return totalSalary / jobs.length;
+            }
+    
+            static filterJobsAboveAverageSalary(jobs) {
+                const averageSalary = HighSalaryJob.getAverageSalary(jobs);
+                return jobs.filter(job => parseFloat(job.salary) > averageSalary);
+            }
+        }
+    
+        function JobPrototype(title, description, salary, phone) {
+            this.title = title;
+            this.description = description;
+            this.salary = salary;
+            this.phone = phone;
+        }
+    
+        JobPrototype.prototype.getTitle = function() {
+            return this.title;
+        };
+    
+        JobPrototype.prototype.setTitle = function(title) {
+            this.title = title;
+        };
+    
+        JobPrototype.prototype.getDescription = function() {
+            return this.description;
+        };
+    
+        JobPrototype.prototype.setDescription = function(description) {
+            this.description = description;
+        };
+    
+        JobPrototype.prototype.getSalary = function() {
+            return this.salary;
+        };
+    
+        JobPrototype.prototype.setSalary = function(salary) {
+            this.salary = salary;
+        };
+    
+        JobPrototype.prototype.getPhone = function() {
+            return this.phone;
+        };
+    
+        JobPrototype.prototype.setPhone = function(phone) {
+            this.phone = phone;
+        };
+    
+        JobPrototype.prototype.addJob = function() {
+            return {
+                title: this.title,
+                description: this.description,
+                salary: this.salary,
+                phone: this.phone
+            };
+        };
+    
+        JobPrototype.prototype.displayJobs = function(jobs, elementId) {
+            const jobListDiv = document.getElementById(elementId);
+            jobListDiv.innerHTML = '';  
+    
+            jobs.forEach((job, index) => {
+                const jobInfo = `
+                    <p><strong>${index + 1}. ${job.title}</strong></p>
+                    <p>Описание: ${job.description}</p>
+                    <p>Зарплата: ${job.salary} руб.</p>
+                    <p>Телефон: ${job.phone}</p>
+                    <hr>
+                `;
+                jobListDiv.innerHTML += jobInfo;
+            });
+        };
+    
+        const jobs = JSON.parse('{{ jobs_json|escapejs }}');
+    
+        const jobPrototypeInstance = new JobPrototype();
+    
+        JobPrototype.prototype.displayJobs(jobs, 'jobList1');
+        Job.displayJobs(jobs, 'jobList2');
 
+
+        const highSalaryJob = new HighSalaryJob();
+        
+        document.getElementById('filterButton').addEventListener('click', function() {
+            const higherSalaryJobs = HighSalaryJob.filterJobsAboveAverageSalary(jobs);
+            if (higherSalaryJobs.length > 0) {
+                HighSalaryJob.displayJobs(higherSalaryJobs, 'jobList2');
+            } else {
+                alert('Нет вакансий с зарплатой выше средней.');
+            }
+        });
+    
+        const jobForm = document.getElementById("jobForm");
+        jobForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+    
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            const salary = document.getElementById("salary").value;
+            const phone = document.getElementById("phone").value;
+    
+            const newJob = new Job(title, description, salary, phone);
+            jobs.push(newJob.addJob());  
+            Job.displayJobs(jobs, 'jobList2');
+        });
+    </script>
 </body>
 </html>

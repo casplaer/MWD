@@ -1,3 +1,5 @@
+import json
+from django.forms import ValidationError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.models import User
@@ -101,9 +103,44 @@ def conf(request):
 
     return render(request, "base/conf.html", {'quote_text':quote_text})
 
+def add_job(request):
+    if request.method == 'POST':
+        try:
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            salary = request.POST.get('salary')
+            phone = request.POST.get('phone')
+
+            if not title or not description or not salary or not phone:
+                return JsonResponse({"error": "All fields are required"}, status=400)
+
+            job = Job.objects.create(
+                title=title,
+                description=description,
+                salary=salary,
+                phone=phone
+            )
+            return JsonResponse({"message": "Job added successfully!"}, status=201)
+        except ValidationError as e:
+            return JsonResponse({"error": f"Invalid data: {e}"}, status=400)
+    return JsonResponse({"error": "Only POST method is allowed."}, status=405)
+
 def vacancies(request):
     jobs = Job.objects.all()
-    return render(request, "base/vacancies.html", {'jobs': jobs})
+
+    jobs_json = json.dumps([{
+        'title': job.title,
+        'description': job.description,
+        'salary': str(job.salary),
+        'phone': job.phone
+    } for job in jobs])
+
+    context = {
+        "jobs" : jobs,
+        "jobs_json" : jobs_json,
+    }
+
+    return render(request, "base/vacancies.html", context)
 
 def review_list(request):
     reviews = Review.objects.all()
@@ -225,7 +262,7 @@ def create_order(request):
             cart.is_new = False
             cart.save()
             new_cart = Cart.objects.create(user=request.user, is_new=True)
-            return redirect('home')  # Redirect to home page after successful order placement
+            return redirect('home')  
     else:
         
         form = OrderForm()
@@ -258,7 +295,7 @@ def edit_product(request, product_id):
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('home')  # ��� ����-���� ���
+            return redirect('home') 
     else:
         form = ProductForm(instance=product)
     return render(request, 'base/edit_product.html', {'form': form})
@@ -267,11 +304,10 @@ def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == 'POST':
         product.delete()
-        return redirect('home')  # Обновите это с именем вашего представления списка продуктов
+        return redirect('home')  
     return render(request, 'base/delete_product.html', {'product': product})
 
 def get_category_data():
-    # Наиболее популярные категории товаров
     category_data = Product.objects.values('category').annotate(
         total_quantity=Sum('cartitem__quantity'),
         total_revenue=Sum(F('cartitem__quantity') * F('price'))
@@ -364,11 +400,14 @@ def anim(request):
 def lab3(request):
     settings = SliderSettings.objects.first()
     contacts = Contact.objects.all()
+    jobs = Job.objects.all()
 
-    paginator = Paginator(contacts, 3) 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
+    jobs_json = json.dumps([{
+        'title': job.title,
+        'description': job.description,
+        'salary': str(job.salary),
+        'phone': job.phone
+    } for job in jobs])
     products = Product.objects.all()
 
     if request.user.is_authenticated and request.user.is_staff:
@@ -393,6 +432,8 @@ def lab3(request):
         'form': form,
         'contacts': contacts,
         'products': products,
+        'jobs' : jobs,
+        'jobs_json' : jobs_json,
     }
     return render(request, 'base/lab3.html', context)
 

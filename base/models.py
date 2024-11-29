@@ -3,6 +3,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import AbstractUser
+import re
+from django.core.validators import RegexValidator
+
 
 from shop import settings
     
@@ -29,10 +32,20 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
 class Job(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     salary = models.DecimalField(max_digits=10, decimal_places=2)
+    phone = models.CharField(
+        max_length=13,
+        validators=[ 
+            RegexValidator(
+                regex=r'^\+375\d{9}$',
+                message='Номер телефона должен быть в формате +375XXXXXXXXX.',
+            )
+        ]
+    )
 
     def __str__(self):
         return self.title

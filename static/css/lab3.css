@@ -300,3 +300,26 @@ th {
 .popup-content button:hover {
     background-color: #45a049;
 }
+
+.cart {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 150px;
+  height: 150px;
+  background-image: url('static/general_images/cart.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.product {
+  position: absolute;
+  bottom: 100%;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  z-index: 0;
+}

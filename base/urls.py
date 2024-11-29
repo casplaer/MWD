@@ -33,4 +33,5 @@ urlpatterns = [
     path('anim/', views.anim),
     path('lab3/', views.lab3, name='lab3'),
     path('create-contact/', views.add_contact, name='add_contact'),
+    path('add-job/', views.add_job, name='add_job'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

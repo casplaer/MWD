@@ -172,5 +172,40 @@ document.addEventListener("DOMContentLoaded", function () {
     
         headers[columnIndex].classList.add(newSortOrder === 'asc' ? 'sorted-asc' : 'sorted-desc');
     }
-    
+    const products = document.querySelectorAll('.product');
+    const cart = document.querySelector('.cart');
+
+    // Функция для проверки, видна ли картинка на экране
+    function isInView(element) {
+        const rect = element.getBoundingClientRect();
+        return rect.top <= window.innerHeight && rect.bottom >= 0;
+    }
+
+    // Функция для анимации падения продуктов
+    function animateProducts() {
+        products.forEach((product, index) => {
+            if (isInView(product)) {
+                // Вычисляем начальную позицию падения
+                const distanceToCart = cart.getBoundingClientRect().top - product.getBoundingClientRect().top;
+
+                // Делаем продукт видимым, убираем его начальную непрозрачность
+                product.style.opacity = 1;
+
+                // Делаем анимацию падения через изменение вертикальной позиции
+                product.style.transition = 'transform 2s ease-in-out';
+                product.style.transform = `translateY(${distanceToCart}px)`;
+            } else {
+                // Продукт скрывается, если он не виден
+                product.style.opacity = 0;
+                product.style.transform = 'translateY(0)';
+            }
+        });
+    }
+
+    // Слушаем событие прокрутки
+    window.addEventListener('scroll', animateProducts);
+
+    // Начальная анимация продуктов
+    animateProducts();
 });
+
