@@ -110,7 +110,7 @@
         
             searchButton.addEventListener("click", filterRows);
         
-            searchInput.addEventListener("input", filterRows);
+            //searchInput.addEventListener("input", filterRows);
         
             rows.forEach(row => {
                 row.addEventListener("click", function() {
@@ -354,13 +354,6 @@
 </head>
 <body>
     <div class="container">
-        <div class="cart" style="background-image: url('{% static 'general_images/cart.png' %}');"></div>
-
-        <div class="product" id="product1" style="background-image: url('{% static 'general_images/product1.png' %}');"></div>
-        <div class="product" id="product2" style="background-image: url('{% static 'general_images/product2.png' %}');"></div>
-        <div class="product" id="product3" style="background-image: url('{% static 'general_images/product3.png' %}');"></div>
-        <div class="product" id="product4" style="background-image: url('{% static 'general_images/product4.png' %}');"></div>
-
         <div id="age-popup">
             <div class="popup-content">
                 <h3>Введите вашу дату рождения</h3>
